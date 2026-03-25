@@ -154,25 +154,31 @@ body { min-height:100vh; font-family:'Nunito',sans-serif; display:flex; align-it
 </div>
 
 <script>
-// Enlace directo a la banda sonora (Versión Orquestal)
-const audio = new Audio('https://audio.com/api/audio/track/3034267/download'); 
-audio.loop = true;
-audio.volume = 0.6; // Volumen al 60% para que no sea muy fuerte al inicio
+  // Enlace directo a la melodía icónica de Jurassic Park
+  const audioUrl = "https://www.myinstants.com/media/sounds/jurassic-park-theme-song.mp3";
+  const audio = new Audio(audioUrl);
+  audio.loop = true;
+  audio.volume = 0.5;
 
-const playMusic = () => {
+  // Función para iniciar la música
+  function activarMusica() {
     audio.play().then(() => {
-        // La música comenzó con éxito
-        document.removeEventListener('click', playMusic);
-        document.removeEventListener('touchstart', playMusic);
+      console.log("Ambiente prehistórico activado 🦖");
+      // Una vez que suena, quitamos los eventos para que no se reinicie
+      document.removeEventListener('click', activarMusica);
+      document.removeEventListener('touchstart', activarMusica);
     }).catch(error => {
-        console.log("El navegador bloqueó el audio. Esperando interacción del usuario.");
+      console.log("Esperando interacción del invitado...");
     });
-};
+  }
 
-// Escucha el primer clic o toque en el celular para activar el sonido
-document.addEventListener('click', playMusic);
-document.addEventListener('touchstart', playMusic);
+  // Escucha el primer toque o clic del invitado en la invitación
+  document.addEventListener('click', activarMusica);
+  document.addEventListener('touchstart', activarMusica);
 
-// Intento de reproducción automática (algunos navegadores lo permiten si el usuario ya ha interactuado antes)
-window.addEventListener('load', playMusic);
+  // Intento de carga inicial
+  window.addEventListener('load', () => {
+    // Algunos navegadores permiten el play si el usuario ya interactuó con el sitio
+    activarMusica();
+  });
 </script>
