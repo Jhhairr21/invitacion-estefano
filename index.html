@@ -154,31 +154,29 @@ body { min-height:100vh; font-family:'Nunito',sans-serif; display:flex; align-it
 </div>
 
 <script>
-  // Enlace directo a Never Say Never (Justin Bieber ft. Jaden Smith)
-  const audio = new Audio('https://audio.com/api/audio/track/3847334/download'); 
+  // Enlace de respaldo (Banda sonora temática)
+  const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); 
   audio.loop = true;
   audio.volume = 0.5;
 
-  // Forzamos la carga del archivo
+  // Forzar la carga del audio antes de reproducir
   audio.load();
 
-  const reproducirMusica = () => {
+  const iniciarAventura = () => {
     audio.play().then(() => {
-      console.log("¡Misión cumplida! Sonando Never Say Never 🦖");
-      // Quitamos los escuchadores para que no se reinicie al seguir tocando
-      ["click", "touchstart", "scroll"].forEach(e => 
-        document.removeEventListener(e, reproducirMusica)
+      console.log("Música iniciada correctamente");
+      // Limpiamos los eventos para que no se reinicie al seguir tocando
+      ["click", "touchstart", "scroll"].forEach(event => 
+        document.removeEventListener(event, iniciarAventura)
       );
-    }).catch(err => {
-      console.log("El navegador aún bloquea el audio. Toca cualquier parte.");
-    });
+    }).catch(err => console.log("Reintento en el próximo toque..."));
   };
 
-  // Se activa con el primer toque, clic o si el invitado desliza hacia abajo (scroll)
-  document.addEventListener('click', reproducirMusica);
-  document.addEventListener('touchstart', reproducirMusica);
-  window.addEventListener('scroll', reproducirMusica, { once: true });
+  // Escuchamos CUALQUIER interacción: toque, clic o incluso scroll
+  document.addEventListener('click', iniciarAventura);
+  document.addEventListener('touchstart', iniciarAventura);
+  window.addEventListener('scroll', iniciarAventura, { once: true });
 
-  // Intento automático por si el navegador lo permite
-  window.addEventListener('load', reproducirMusica);
+  // Intento automático al cargar (solo funciona en algunos navegadores)
+  window.addEventListener('load', iniciarAventura);
 </script>
