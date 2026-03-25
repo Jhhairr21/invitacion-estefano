@@ -154,25 +154,25 @@ body { min-height:100vh; font-family:'Nunito',sans-serif; display:flex; align-it
 </div>
 
 <script>
-// Usaremos un enlace directo a un archivo MP3 (puedes buscar uno de Jurassic Park en Pixabay o similares)
-const audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); 
+// Enlace directo a la banda sonora (Versión Orquestal)
+const audio = new Audio('https://audio.com/api/audio/track/3034267/download'); 
 audio.loop = true;
-audio.volume = 0.5;
+audio.volume = 0.6; // Volumen al 60% para que no sea muy fuerte al inicio
 
-// Función para intentar reproducir
 const playMusic = () => {
     audio.play().then(() => {
-        console.log("Música iniciada");
-        // Una vez que suena, quitamos los escuchadores para no reiniciar
+        // La música comenzó con éxito
         document.removeEventListener('click', playMusic);
         document.removeEventListener('touchstart', playMusic);
-    }).catch(error => console.log("Esperando interacción..."));
+    }).catch(error => {
+        console.log("El navegador bloqueó el audio. Esperando interacción del usuario.");
+    });
 };
 
-// Escucha cualquier toque en la pantalla para activar el sonido
+// Escucha el primer clic o toque en el celular para activar el sonido
 document.addEventListener('click', playMusic);
 document.addEventListener('touchstart', playMusic);
 
-// Intento automático (por si el navegador lo permite)
+// Intento de reproducción automática (algunos navegadores lo permiten si el usuario ya ha interactuado antes)
 window.addEventListener('load', playMusic);
 </script>
