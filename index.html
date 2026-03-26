@@ -154,31 +154,23 @@ body { min-height:100vh; font-family:'Nunito',sans-serif; display:flex; align-it
 </div>
 
 <script>
-  // Carga el archivo mp3 que subas a GitHub con el nombre musica.mp3
+  // CONFIGURACIÓN DE MÚSICA INFINITA
   const audio = new Audio('musica.mp3'); 
-  audio.loop = true;
-  audio.volume = 0.5;
-
-  // Función para pausar música
-  const detenerMusica = () => {
-    audio.pause();
-    console.log("Música pausada para salir de la invitación.");
-  };
+  audio.loop = true;  // Mantiene la música en bucle
+  audio.volume = 0.5; // Volumen medio
 
   const iniciarMusica = () => {
-    audio.play().catch(err => console.log("Esperando toque..."));
-    // Quitamos eventos de inicio una vez que suena
-    ["click", "touchstart", "scroll"].forEach(e => document.removeEventListener(e, iniciarMusica));
+    audio.play().then(() => {
+      console.log("Música sonando en bucle...");
+      // Una vez que arranca, quitamos los detectores para que no se reinicie
+      ["click", "touchstart", "scroll"].forEach(e => document.removeEventListener(e, iniciarMusica));
+    }).catch(err => console.log("Esperando interacción..."));
   };
 
-  // Se activa al tocar, hacer clic o deslizar la pantalla
+  // Se activa al tocar, hacer clic o deslizar la pantalla (necesario por reglas del navegador)
   document.addEventListener('click', iniciarMusica);
   document.addEventListener('touchstart', iniciarMusica);
   window.addEventListener('scroll', iniciarMusica, { once: true });
-
-  // Escuchadores para DETENER música al hacer clic en botones externos
-  document.getElementById('btn-wsp').addEventListener('click', detenerMusica);
-  document.getElementById('btn-mapa').addEventListener('click', detenerMusica);
 </script>
 </body>
 </html>
